@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}
+Chen's Blog!
+{% endblock %}
+{% block titlemessage %}
+    <h2>Chen's Blog!!</h2>
+{% endblock %}
+{% block content %}
+<table class="table table-striped">
+      <tr><th>編號</th><th>主題</th><th>張貼時間</th></tr>
+      {%for post in posts%}
+      <tr>
+        <td>{{post.id}}</td>
+        <td><a href="/post/{{post.slug}}/">{{ post.title}}</a></td>
+        <td>{{post.pub_date}}</td>
+      </tr> 
+      {% endfor %}
+    </table>
+    網頁瀏覽人數：{{visit_count}}
+{% endblock %}
+    

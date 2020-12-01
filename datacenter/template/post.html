@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block title %}
+Chen's Blog!
+{% endblock %}
+{% block titlemessage %}
+    <h2>Chen's Blog!!</h2>
+{% endblock %}
+{% block content %}
+<div class="card">
+  
+  <h5 class="card-header">{{post.title}}</h5>
+  <div class="card-body">
+    <h5 class="card-title">Special title treatment</h5>
+    <p class="card-text">{{ post.body | linebreaks }}</p>
+    <a href="https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwiC-83EgontAhV6yYsBHUmIDRAQFjAAegQIAhAC&url=http%3A%2F%2Fmail.lsps.tp.edu.tw%2F~sf712%2Fclass%2Fpoem_silentnight.htm&usg=AOvVaw0kxWSEyngemf8Rm5rzALln" class="btn btn-primary">詳細</a>
+  </div>
+</div>
+
+<body>
+    
+    <hr>
+        <p style='font-family:微軟正黑體;font-size:12pt;letter-spacing:2pt;'>
+            {{ post.body | linebreaks }}</a>
+        </p>
+    <hr>
+    <h3><a href='/'>回首頁</a></h3>
+</body> 
+
+{% endblock %}

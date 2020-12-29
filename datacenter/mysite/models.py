@@ -40,3 +40,9 @@ class AccessInfo(models.Model):
 
     def __str__(self):
         return self.access_time
+
+class Covid(models.Model):
+    year = models.CharField(max_length=6)
+    numb = models.CharField(max_length=5)
+    def __str__(self):
+        return self.year

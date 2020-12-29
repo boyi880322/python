@@ -6,17 +6,50 @@
     <h2>統計圖表</h2>
 {% endblock %}
 {% block content %}
+<button><a href="/mychart/0">all(bar)</a></button>
+{% for branch in branches %}
+<button> 
+<a href="/mychart/{{ branch.id }}">{{ branch.Name }}(bar)</a></button>
+{% endfor %}
+<button onclick="changefunction()"><a style="color: #4169e1">change to line chart</a></button>
+<button onclick="changefunction2()"><a style="color: #4169e1">change to pie chart</a></button>
 
-<canvas id="myChart" width="200" height="200"></canvas>
+<style type="text/css">
+#body {
+                width: 1100px;
+                height: 500px;
+                
+                line-height: 0px;
+                font-size: 20px;
+                color: #000000;
+                font-weight: bold;
+                background-color: white;
+                float: left;
+                overflow:auto;
+        }
+</style>
+
+<div id="body">
+<canvas id="myChart" style="width:1000px ;height:450px;border: 0px"></canvas>
+<canvas id="myChart1" style="width:1000px ;height:450px;border: 0px"></canvas>
+<canvas id="myChart2" style="width:1000px ;height:450px;border: 0px"></canvas>
 <script>
 var ctx = document.getElementById('myChart').getContext('2d');
 var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
+            labels: [
+              {% for item in data %}
+                '{{item.branch}}-{{item.income_month}}月',
+              {% endfor %}
+            ],
+            datasets: [{
+                label: '各分店營收',
+                data: [
+                {% for item in data %}
+                  '{{item.income}}',
+                {% endfor %}
+            ],
             backgroundColor: [
                 'rgba(255, 99, 132, 0.2)',
                 'rgba(54, 162, 235, 0.2)',
@@ -46,5 +79,199 @@ var myChart = new Chart(ctx, {
         }
     }
 });
+
+var ctx1 = document.getElementById('myChart1').getContext('2d');
+var myChart1 = new Chart(ctx1, {
+    type: 'line',
+    data: {
+            labels: [
+              {% for item in data %}
+                '{{item.branch}}-{{item.income_month}}月',
+              {% endfor %}
+            ],
+            datasets: [{
+                label: '各分店營收',
+                data: [
+                {% for item in data %}
+                  '{{item.income}}',
+                {% endfor %}
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+var ctx2 = document.getElementById('myChart2').getContext('2d');
+var myChart2 = new Chart(ctx2, {
+    type: 'pie',
+    data: {
+            labels: [
+              {% for item in data %}
+                '{{item.branch}}-{{item.income_month}}月',
+              {% endfor %}
+            ],
+            datasets: [{
+                label: '各分店營收',
+                data: [
+                {% for item in data %}
+                  '{{item.income}}',
+                {% endfor %}
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+function changefunction(){
+    if (myChart){
+      myChart.destroy()
+    }
+    myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+            labels: [
+              {% for item in data %}
+                '{{item.branch}}-{{item.income_month}}月',
+              {% endfor %}
+            ],
+            datasets: [{
+                label: '各分店營收',
+                data: [
+                {% for item in data %}
+                  '{{item.income}}',
+                {% endfor %}
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+  }
+
+function changefunction2(){
+    if (myChart){
+      myChart.destroy()
+    }
+    myChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+            labels: [
+              {% for item in data %}
+                '{{item.branch}}-{{item.income_month}}月',
+              {% endfor %}
+            ],
+            datasets: [{
+                label: '各分店營收',
+                data: [
+                {% for item in data %}
+                  '{{item.income}}',
+                {% endfor %}
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+  }
 </script>
+</div>
+
 {% endblock %}

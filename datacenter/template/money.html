@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}
+Chen's Blog!
+{% endblock %}
+{% block titlemessage %}
+    <h2>Chen's Blog!!</h2>
+{% endblock %}
+
+{% block content %}
+<br>
+<center><h5>歷史匯率</h5></center>
+<canvas id="speedChart" width="600" height="300"></canvas>
+<script type="text/javascript">
+var speedCanvas = document.getElementById("speedChart");
+
+Chart.defaults.global.defaultFontFamily = "Lato";
+Chart.defaults.global.defaultFontSize = 18;
+
+var dataFirst = {
+    label: "新台幣",
+    data:[ {% for i in data %}'{{i.新台幣}}',{% endfor %} ] ,
+    lineTension: 0,
+    fill: false,
+    borderColor: 'red'
+  };
+
+var dataSecond = {
+    label: "人民幣",
+    data: [ {% for i in data %}'{{i.人民幣}}',{% endfor %} ] ,
+    lineTension: 0,
+    fill: false,
+  borderColor: 'blue'
+  };
+
+
+var speedData = {
+  labels: [ {% for i in data %}'{{i.月別}}',{% endfor %}],
+  datasets: [dataFirst, dataSecond]
+};
+
+var chartOptions = {
+  legend: {
+    display: true,
+    position: 'top',
+    labels: {
+      boxWidth: 80,
+      fontColor: 'black'
+    }
+  }
+};
+
+var lineChart = new Chart(speedCanvas, {
+  type: 'line',
+  data: speedData,
+  options: chartOptions
+});
+</script>
+
+<table class="table table-striped">
+      <tr><th>月別</th><th>台幣匯率</th><th>人民幣匯率</th></tr>
+      {%for i in data %}
+      <tr>
+        <td>{{i.月別}}</td>
+        <td>{{i.新台幣}}</a></td>
+        <td>{{i.人民幣}}</td>
+      </tr> 
+      {% endfor %}
+    </table>
+    
+<br>
+
+
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+{% block title %}
+統計圖表
+{% endblock %}
+{% block titlemessage %}
+    <h2>統計圖表</h2>
+{% endblock %}
+{% block content %}
+
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<figure class="highcharts-figure">
+    <div id="container"></div>
+    
+</figure>
+    
+
+<style type="text/css">
+#body {
+                width: 1100px;
+                height: 500px;
+                
+                line-height: 0px;
+                font-size: 20px;
+                color: #000000;
+                font-weight: bold;
+                background-color: white;
+                float: left;
+                
+        }
+#body1 {
+                width: 1100px;
+                height: 500px;
+                
+                line-height: 0px;
+                font-size: 20px;
+                color: #000000;
+                font-weight: bold;
+                background-color: white;
+                float: left;
+                overflow:auto;
+        }     
+#container {
+  height: 500px; 
+}
+
+.highcharts-figure, .highcharts-data-table table {
+  min-width: 310px; 
+  max-width: 1600px;
+  margin: 1em auto;
+}
+
+.highcharts-data-table table {
+  font-family: Verdana, sans-serif;
+  border-collapse: collapse;
+  border: 1px solid #EBEBEB;
+  margin: 10px auto;
+  text-align: center;
+  width: 100%;
+  max-width: 5000px;
+}
+.highcharts-data-table caption {
+  padding: 1em 0;
+  font-size: 1.2em;
+  color: #555;
+}
+.highcharts-data-table th {
+  font-weight: 600;
+  padding: 0.5em;
+}
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+  padding: 0.5em;
+}
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+  background: #f8f8f8;
+}
+.highcharts-data-table tr:hover {
+  background: #f1f7ff;
+}
+
+
+}   
+</style>
+<script >
+Highcharts.chart('container', {
+    chart: {
+        type: 'column',
+        options3d: {
+            enabled: true,
+            alpha: 0,
+            beta: 25,
+            depth: 70
+        }
+    },
+    title: {
+        text: '新冠病毒統計'
+    },
+    subtitle: {
+        text: '境外移入人數'
+    },
+    plotOptions: {
+        column: {
+            depth: 25
+        }
+    },
+    xAxis: {
+        categories:[ {% for post in country %}'{{post.country}}',{% endfor %} ],
+        labels: {
+            skew3d: true,
+            style: {
+                fontSize: '16px'
+            }
+        }
+    },
+    yAxis: {
+        title: {
+            text: null
+        }
+    },
+    series: [{
+        name: '人數',
+        data:[ {% for post in country %} {{post.count}}, {% endfor %} ]
+    }]
+});
+</script>
+<div id="body1">
+	
+	<table class="table table-striped">
+      <tr><th>國家</th><th>人數</th></tr>
+      {%for post in country %}
+      <tr>
+        <td>{{post.country}}</td>
+        <td>{{post.count}}</td>
+      </tr> 
+      {% endfor %}
+    </table>
+	
+</div>
+<script language="JavaScript">
+    function ShowTime()
+    {
+    　    document.getElementById('showbox').innerHTML = new Date();
+    　    setTimeout('ShowTime()',1000);
+    }
+    </script>
+    <body onload="ShowTime()">
+    <div id="showbox"></div>
+{% endblock %}

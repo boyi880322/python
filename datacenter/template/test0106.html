@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}
+Chen's Blog!
+{% endblock %}
+{% block titlemessage %}
+    <h2>Chen's Blog!!</h2>
+{% endblock %}
+{% block content %}
+<table class="table table-striped">
+      <tr><th>股票名稱</th><th>收盤價</th><th></th></tr>
+      {%for i in data %}
+      <tr>
+        <td>{{i.證券名稱}}</td>
+        <td>{{i.收盤價}}</a></td>
+        <td>{{i}}</td>
+      </tr> 
+      {% endfor %}
+    </table>
+    
+<br>
+
+{{target_data}}
+
+{% endblock %}

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from mysite import views
-from mysite.views import homepage,lotto,index,showpost,chart,mychart,mychart1,mychart2
+from mysite.views import homepage,lotto,CHexport,index,showpost,chart,mychart,mychart1,mychart2,test,money
 urlpatterns = [
     path('post/<str:slug>/',showpost),
 	path('',homepage),
@@ -29,5 +29,8 @@ urlpatterns = [
     path('mychart2/<int:bid>/',mychart),
     path('mychartdate/<int:year>/<int:month>/',chart),
     path('mychartdate/<int:year>/',chart),
+    path( 'test/',test),
+    path( 'money/',money),
+    path('CHexport/',CHexport),
 
 ]

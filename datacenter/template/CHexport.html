@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}
+Chen's Blog!
+{% endblock %}
+{% block titlemessage %}
+    <h2>Chen's Blog!!</h2>
+{% endblock %}
+
+{% block content %}
+<br>
+<center><h5>各年大陸人士來台人數</h5></center>
+<canvas id="speedChart" width="600" height="300"></canvas>
+<script type="text/javascript">
+var speedCanvas = document.getElementById("speedChart");
+
+Chart.defaults.global.defaultFontFamily = "Lato";
+Chart.defaults.global.defaultFontSize = 18;
+
+var dataFirst = {
+    label: "觀光",
+    data:[ {% for i in data %}'{{i.觀光}}',{% endfor %} ] ,
+    lineTension: 0,
+    fill: false,
+    borderColor: 'red'
+  };
+
+var dataSecond = {
+    label: "專業交流",
+    data: [ {% for i in data %}'{{i.專業交流}}',{% endfor %} ] ,
+    lineTension: 0,
+    fill: false,
+  borderColor: 'blue'
+  };
+var dataThird = {
+    label: "商務交流",
+    data: [ {% for i in data %}'{{i.商務交流}}',{% endfor %} ] ,
+    lineTension: 0,
+    fill: false,
+  borderColor: 'green'
+  };
+
+var speedData = {
+  labels: [ {% for i in data %}'{{i.年度}}',{% endfor %}],
+  datasets: [dataFirst, dataSecond,dataThird]
+};
+
+var chartOptions = {
+  legend: {
+    display: true,
+    position: 'top',
+    labels: {
+      boxWidth: 80,
+      fontColor: 'black'
+    }
+  }
+};
+
+var lineChart = new Chart(speedCanvas, {
+  type: 'line',
+  data: speedData,
+  options: chartOptions
+});
+</script>
+<table class="table table-striped">
+      <tr><th>年度</th><th>觀光</th><th>專業交流</th><th>商務交流</th></tr>
+      {%for i in data %}
+      <tr>
+        <td>{{i.年度}}</td>
+        <td>{{i.觀光}}</td>
+        <td>{{i.專業交流}}</a></td>
+        <td>{{i.商務交流}}</td>
+      </tr> 
+      {% endfor %}
+    </table>
+
+
+{% endblock %}

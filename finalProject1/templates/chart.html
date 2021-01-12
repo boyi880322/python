@@ -1,0 +1,159 @@
+{% extends 'base.html' %}
+{% block title %}
+統計圖表
+{% endblock %}
+{% block titlemessage %}
+    <h2>統計圖表</h2>
+{% endblock %}
+{% block content %}
+
+
+<style type="text/css">
+#body {
+                width: 1000px;
+                height: 500px;
+                
+                line-height: 0px;
+                font-size: 20px;
+                color: #000000;
+                font-weight: bold;
+                background-color: white;
+                float: left;
+                
+        }
+#body1 {
+                width: 1100px;
+                height: 500px;
+                
+                line-height: 0px;
+                font-size: 20px;
+                color: #000000;
+                font-weight: bold;
+                background-color: white;
+                float: left;
+                overflow:auto;
+        }        
+</style>
+
+<div id="body">
+<canvas id="myChart" style="width:1000px ;height:450px;border: 0px"></canvas>
+<canvas id="myChart1" style="width:1000px ;height:450px;border: 0px"></canvas>
+<canvas id="myChart2" style="width:1000px ;height:450px;border: 0px"></canvas>
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+            labels: [
+              {% for item in data %}
+                '{{item.country}}',
+              {% endfor %}
+            ],
+            datasets: [{
+                label: '各國境外移入人數',
+                data: [
+                {% for item in data %}
+                  '{{item.count}}',
+                {% endfor %}
+            ],
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)',
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)','rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)','rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)','rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)','rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)','rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+
+</script>
+</div>
+<div id="body1">
+	
+	<table class="table table-striped">
+      <tr><th>國家</th><th>人數</th></tr>
+      {%for post in country %}
+      <tr>
+        <td>{{post.country}}</td>
+        <td>{{post.count}}</td>
+      </tr> 
+      {% endfor %}
+    </table>
+	
+</div>
+<script language="JavaScript">
+    function ShowTime()
+    {
+    　    document.getElementById('showbox').innerHTML = new Date();
+    　    setTimeout('ShowTime()',1000);
+    }
+    </script>
+    <body onload="ShowTime()">
+    <div id="showbox"></div>
+{% endblock %}
+

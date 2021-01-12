@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-import random
+import random , json
 from django.http import HttpResponse
 from mysite.models import Post
 from datetime import datetime
@@ -76,5 +76,28 @@ def chart(request,year=0,month=0):
 		title = "各分店營收情形"
 	return render(request, 'mychart.html' , locals())
 
-def Covid(request):
-	numb=[]
+def test(request):
+	fp = open("stock.json", "r" ,encoding="utf-8")
+	data =fp.read()
+	data = json.loads(data)
+	target_data = [ (stock["證券名稱"] , stock["收盤價"]) for stock in data ]
+	number_data = [ (stock["證券名稱"]) for stock in data ]
+	price_data = [ (stock["收盤價"]) for stock in data ]
+	return render(request,'test.html',locals())
+
+def money(request):
+	fp = open("money.json", "r" ,encoding="utf-8")
+	data =fp.read()
+	data = json.loads(data)
+	
+	return render(request,'money.html',locals())
+
+def CHexport(request):
+	fp = open("chinaexport.json", "r" ,encoding="utf-8")
+	data =fp.read()
+	data = json.loads(data)
+	
+	return render(request,'CHexport.html',locals())
+
+
+	

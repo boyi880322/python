@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+{% load static %}
+{% block head %}
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="{% static '/js/tw-all.js' %}"></script>
+{% endblock  %}
+{% block css %}
+    h3{
+        text-align: center;
+    }
+    .zone-map{
+        background-color: #cceeff;
+    }
+    .subunit-boundary {
+        fill: none;
+        stroke: #fff;
+        stroke-dasharray: 5, 0;
+        stroke-linejoin: round;
+    }
+    .map{
+        padding: 10px;
+    }
+    #map {
+        height: 500px; 
+        min-width: 350px; 
+        max-width: 600px; 
+        margin: 0 auto; 
+    }
+    .loading {
+        margin-top: 10em;
+        text-align: center;
+        color: gray;
+    }
+    #datatable {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 5px solid #c0c0c0;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+    #datatable caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+    #datatable th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+    #datatable td, #datatable th, #datatable caption {
+        padding: 0.5em;
+    }
+    #datatable thead tr{
+        background: #f8f8f8;
+    }
+    #datatable tr:hover {
+        background: #f1f7ff;
+    }
+{% endblock %}
+{% block content %}
+    <h3>疫情地圖</h3>
+    <div class="zone-map">
+        <div id="map" class="map"></div>
+        <h3>本土案例前五大排行</h3>
+        <table id="datatable">
+        <thead>
+            <tr>
+                <th>縣市名</th>
+                <th>本土數</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for city in topinfo  %}
+                <tr>
+                    <th>{{city.city}}</th>
+                    <td>{{city.count}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% endblock  %}
+{% block js %}
+    var data = [
+        {% for city in mapinfo %}
+            ['{{city.code}}',{{city.count}}],
+        {% endfor %}
+    ];
+    // Create the chart
+    Highcharts.mapChart('map', {
+        chart: {
+            map: 'countries/tw/tw-all'
+        },
+
+        title: {
+            text: '本土病例疫情地圖'
+        },
+
+        subtitle: {
+            text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/tw/tw-all.js">Taiwan</a>'
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        colorAxis: {
+            min: 0,
+            dataClasses: [{
+                from: 0,
+                to: 0,
+                color: "green"
+            },{
+                from: 1,
+                to: 5,
+                color: "yellow"
+            },{
+                from: 6,
+                to: 10,
+                color: "orange"
+            },{
+                from:11,
+                color: "Red"
+            }
+            ],
+        },
+
+        series: [{
+            data: data,
+            name: 'Random data',
+            states: {
+                hover: {
+                    color: '#BADA55'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: '{point.name}'
+            }
+        }]
+    });
+{% endblock %}

@@ -176,6 +176,7 @@ function changefunction(){
     if (myChart){
       myChart.destroy()
     }
+var ctx = document.getElementById('myChart').getContext('2d');
     myChart = new Chart(ctx, {
     type: 'line',
     data: {
@@ -221,11 +222,12 @@ function changefunction(){
     }
 });
   }
-
 function changefunction2(){
     if (myChart){
       myChart.destroy()
     }
+
+    var ctx = document.getElementById('myChart').getContext('2d');
     myChart = new Chart(ctx, {
     type: 'pie',
     data: {
